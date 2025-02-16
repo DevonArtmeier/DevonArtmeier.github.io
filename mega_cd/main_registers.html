@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../style.css">
+		<title>Sega Mega CD: Main CPU Registers</title>		
+	</head>
+
+	<body>
+		<div id="content">
+			<h1>WIP</h1>
+			
+			<p><b>0xA12000: Sub CPU interrupt, bus request, reset</b></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>F</th><th>E</th><th>D</th><th>C</th>
+					<th>B</th><th>A</th><th>9</th><th>8</th>
+					<th>7</th><th>6</th><th>5</th><th>4</th>
+					<th>3</th><th>2</th><th>1</th><th>0</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>IEN2</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>IFL2</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>SBRQ</td><td>SRES</td>
+				</tr>
+				<tr>
+					<td>READ</td>
+					<td>0/1</td><td>0</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0</td><td>0/1</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0/1</td><td>0/1</td>
+				</tr>
+				<tr>
+					<td>WRITE</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0</td><td>0/1</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0/1</td><td>0/1</td>
+				</tr>
+			</table>
+			
+			<ul>
+				<li class="register_bits"><b>SRES: Sub CPU reset</b>
+					<ul>
+						<li>Write</li>
+						<ul>
+							<li>0: Assert</li>
+							<li>1: Deassert</li>
+						</ul>
+					</ul>
+					<ul>
+						<li>Read</li>
+						<ul>
+							<li>0: Reset state</li>
+							<li>1: Run state</li>
+						</ul>
+					</ul>
+				</li>
+				<li class="register_bits"><b>SBRQ: Sub CPU bus request</b>
+					<ul>
+						<li>Write</li>
+						<ul>
+							<li>0: Release bus</li>
+							<li>1: Request bus</li>
+						</ul>
+					</ul>
+					<ul>
+						<li>Read</li>
+						<ul>
+							<li>0: No bus access</li>
+							<li>1: Has bus access</li>
+						</ul>
+					</ul>
+				</li>
+				<li class="register_bits"><b>IFL2: Sub CPU level 2 interrupt request</b>
+					<ul>
+						<li>Write</li>
+						<ul>
+							<li>0: Nothing</li>
+							<li>1: Request</li>
+						</ul>
+					</ul>
+					<ul>
+						<li>Read</li>
+						<ul>
+							<li>0: No request</li>
+							<li>1: Processing request</li>
+						</ul>
+					</ul>
+				</li>
+				<li class="register_bits"><b>IEN2: Sub CPU level 2 interrupt enable</b>
+					<ul>
+						<li>0: Disabled</li>
+						<li>1: Enabled</li>
+					</ul>
+				</li>
+			</ul>
+			
+			<p><b>0xA12002: PRG-RAM mode, write protect</b></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>F</th><th>E</th><th>D</th><th>C</th>
+					<th>B</th><th>A</th><th>9</th><th>8</th>
+					<th>7</th><th>6</th><th>5</th><th>4</th>
+					<th>3</th><th>2</th><th>1</th><th>0</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>WP7</td><td>WP6</td><td>WP5</td><td>WP4</td>
+					<td>WP3</td><td>WP2</td><td>WP1</td><td>WP0</td>
+					<td>BK1</td><td>BK0</td><td>-</td><td>-</td>
+					<td>-</td><td>MODE</td><td>DMNA</td><td>RET</td>
+				</tr>
+				<tr>
+					<td>READ</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0</td><td>0</td>
+					<td>0</td><td>0/1</td><td>0/1</td><td>0/1</td>
+				</tr>
+				<tr>
+					<td>WRITE</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0/1</td><td>0</td>
+				</tr>
+			</table>
+			
+			<ul>
+				<li class="register_bits"><b>WP: PRG-RAM write protect</b>
+					<ul>
+						<li>Increments of 0x200 bytes</li>
+					</ul>
+				</li>
+				<li class="register_bits"><b>BK: PRG-RAM bank</b>
+					<ul>
+						<li>Increments of 0x20000 bytes</li>
+					</ul>
+				</li>
+				<li class="register_bits"><b>MODE: Word RAM mode</b>
+					<ul>
+						<li>0: 2M</li>
+						<li>1: 1M/1M</li>
+					</ul>
+				</li>
+				<li class="register_bits"><b>DMNA: Sub CPU Word RAM access</b>
+					<ul>
+						<li>Write</li>
+						<ul>
+							<li>0: Nothing</li>
+							<li>1: Give access</li>
+						</ul>
+					</ul>
+					<ul>
+						<li>Read</li>
+						<ul>
+							<li>0: Processing request</li>
+							<li>1: Sub CPU has access</li>
+						</ul>
+					</ul>
+				</li>
+				<li class="register_bits"><b>RET: Main CPU Word RAM access</b>
+					<ul>
+						<li>0: No access</li>
+						<li>1: Has access</li>
+					</ul>
+				</li>
+			</ul>
+			
+			<p><b>0xA12004: CDC read mode</b></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>F</th><th>E</th><th>D</th><th>C</th>
+					<th>B</th><th>A</th><th>9</th><th>8</th>
+					<th>7</th><th>6</th><th>5</th><th>4</th>
+					<th>3</th><th>2</th><th>1</th><th>0</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>EDT</td><td>DSR</td><td>-</td><td>-</td>
+					<td>-</td><td>DD2</td><td>DD1</td><td>DD0</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+				</tr>
+				<tr>
+					<td>READ</td>
+					<td>0/1</td><td>0/1</td><td>0</td><td>0</td>
+					<td>0</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+				</tr>
+				<tr>
+					<td>WRITE</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+				</tr>
+			</table>
+			
+			<ul>
+				<li class="register_bits"><b>EDT: End of data read</b>
+					<ul>
+						<li>0: Data left to read</li>
+						<li>1: No more data left</li>
+						<li>Reset when read destination is set or when new data transfer from CDC begins</li>
+					</ul>
+				</li>
+				<li class="register_bits"><b>DSR: Data ready</b>
+					<ul>
+						<li>0: Not ready</li>
+						<li>1: Ready in host register</li>
+						<li>Reset when data is read</li>
+					</ul>
+				</li>
+				<li class="register_bits"><b>DD: Read destination</b>
+					<ul>
+						<li>
+							<table>
+								<tr>
+									<th>DD2</th><th>DD1</th><th>DD0</th><th>Destination</th>
+								</tr>
+								<tr>
+									<td>0</td><td>0</td><td>0</td>
+									<td>Invalid</td>
+								</tr>
+								<tr>
+									<td>0</td><td>0</td><td>1</td>
+									<td>Invalid</td>
+								</tr>
+								<tr>
+									<td>0</td><td>1</td><td>0</td>
+									<td>Main CPU read</td>
+								</tr>
+								<tr>
+									<td>0</td><td>1</td><td>1</td>
+									<td>Sub CPU read</td>
+								</tr>
+								<tr>
+									<td>1</td><td>0</td><td>0</td>
+									<td>Wave RAM DMA</td>
+								</tr>
+								<tr>
+									<td>1</td><td>0</td><td>1</td>
+									<td>PRG-RAM DMA</td>
+								</tr>
+								<tr>
+									<td>1</td><td>1</td><td>0</td>
+									<td>Invalid</td>
+								</tr>
+								<tr>
+									<td>1</td><td>0</td><td>1</td>
+									<td>Word RAM DMA</td>
+								</tr>
+							</table>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			
+			<p><b>0xA12006: H-BLANK interrupt vector</b></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>F</th><th>E</th><th>D</th><th>C</th>
+					<th>B</th><th>A</th><th>9</th><th>8</th>
+					<th>7</th><th>6</th><th>5</th><th>4</th>
+					<th>3</th><th>2</th><th>1</th><th>0</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>HIBF</td><td>HIBE</td><td>HIBD</td><td>HIBC</td>
+					<td>HIBB</td><td>HIBA</td><td>HIB9</td><td>HIB8</td>
+					<td>HIB7</td><td>HIB6</td><td>HIB5</td><td>HIB4</td>
+					<td>HIB3</td><td>HIB2</td><td>HIB1</td><td>HIB0</td>
+				</tr>
+				<tr>
+					<td>READ</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+				</tr>
+				<tr>
+					<td>WRITE</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+				</tr>
+			</table>
+			
+			<ul>
+				<li>Overrides 0x72 in BIOS (low word of H-BLANK interrupt address)</li>
+				<li>0x70 in BIOS = 0xFFFF (high word of H-BLANK interrupt address)</li>
+				<li>Set to 0xFFFF on reset</li>
+			</ul>
+			
+			<p><b>0xA12008: CDC host data</b></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>F</th><th>E</th><th>D</th><th>C</th>
+					<th>B</th><th>A</th><th>9</th><th>8</th>
+					<th>7</th><th>6</th><th>5</th><th>4</th>
+					<th>3</th><th>2</th><th>1</th><th>0</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>HD15</td><td>HD14</td><td>HD13</td><td>HD12</td>
+					<td>HD11</td><td>HD10</td><td>HD09</td><td>HD08</td>
+					<td>HD07</td><td>HD06</td><td>HD05</td><td>HD04</td>
+					<td>HD03</td><td>HD02</td><td>HD01</td><td>HD00</td>
+				</tr>
+				<tr>
+					<td>READ</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+				</tr>
+				<tr>
+					<td>WRITE</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+				</tr>
+			</table>
+			
+			<p><b>0xA1200A: Unused</b></p>
+			
+			<p><b>0xA1200C: Stopwatch</b></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>F</th><th>E</th><th>D</th><th>C</th>
+					<th>B</th><th>A</th><th>9</th><th>8</th>
+					<th>7</th><th>6</th><th>5</th><th>4</th>
+					<th>3</th><th>2</th><th>1</th><th>0</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>TD11</td><td>TD10</td><td>TD09</td><td>TD08</td>
+					<td>TD07</td><td>TD06</td><td>TD05</td><td>TD04</td>
+					<td>TD03</td><td>TD02</td><td>TD01</td><td>TD00</td>
+				</tr>
+				<tr>
+					<td>READ</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+				</tr>
+				<tr>
+					<td>WRITE</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+					<td>-</td><td>-</td><td>-</td><td>-</td>
+				</tr>
+			</table>
+			
+			<ul>
+				<li>Counts from 0 to 4095, 1 tick lasting 30.72 μs</li>
+				<li>Resets handled by the Sub CPU</li>
+			</ul>
+			
+			<p><b>0xA1200E: Communication flags</b></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>F</th><th>E</th><th>D</th><th>C</th>
+					<th>B</th><th>A</th><th>9</th><th>8</th>
+					<th>7</th><th>6</th><th>5</th><th>4</th>
+					<th>3</th><th>2</th><th>1</th><th>0</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>CFM7</td><td>CFM6</td><td>CFM5</td><td>CFM4</td>
+					<td>CFM3</td><td>CFM2</td><td>CFM1</td><td>CFM0</td>
+					<td>CFS7</td><td>CFS6</td><td>CFS5</td><td>FSF4</td>
+					<td>CFS3</td><td>CFS2</td><td>CFS1</td><td>FSF0</td>
+				</tr>
+				<tr>
+					<td>READ</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+				</tr>
+				<tr>
+					<td>WRITE</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+				</tr>
+			</table>
+			
+			<ul>
+				<li class="register_bits"><b>CFM: Main CPU flag</b></li>
+				<li class="register_bits"><b>CFS: Sub CPU flag</b></li>
+			</ul>
+			
+			<p><b>0xA12010-0xA1201E: Main CPU communication, 8 words</b></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>F</th><th>E</th><th>D</th><th>C</th>
+					<th>B</th><th>A</th><th>9</th><th>8</th>
+					<th>7</th><th>6</th><th>5</th><th>4</th>
+					<th>3</th><th>2</th><th>1</th><th>0</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>CM15</td><td>CM14</td><td>CM13</td><td>CM12</td>
+					<td>CM11</td><td>CM10</td><td>CM09</td><td>CM08</td>
+					<td>CM07</td><td>CM06</td><td>CM05</td><td>CM04</td>
+					<td>CM03</td><td>CM02</td><td>CM01</td><td>CM00</td>
+				</tr>
+				<tr>
+					<td>READ</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+				</tr>
+				<tr>
+					<td>WRITE</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+				</tr>
+			</table>
+			
+			<p><b>0xA12020-0xA1202E: Sub CPU communication, 8 words</b></p>
+			<table>
+				<tr>
+					<th></th>
+					<th>F</th><th>E</th><th>D</th><th>C</th>
+					<th>B</th><th>A</th><th>9</th><th>8</th>
+					<th>7</th><th>6</th><th>5</th><th>4</th>
+					<th>3</th><th>2</th><th>1</th><th>0</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>CS15</td><td>CS14</td><td>CS13</td><td>CS12</td>
+					<td>CS11</td><td>CS10</td><td>CS09</td><td>CS08</td>
+					<td>CS07</td><td>CS06</td><td>CS05</td><td>CS04</td>
+					<td>CS03</td><td>CS02</td><td>CS01</td><td>CS00</td>
+				</tr>
+				<tr>
+					<td>READ</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+					<td>0/1</td><td>0/1</td><td>0/1</td><td>0/1</td>
+				</tr>
+				<tr>
+					<td>WRITE</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+					<td>0</td><td>0</td><td>0</td><td>0</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,37 @@
+body {
+	background-color: #47206b;
+	color: white;
+	font-family: Verdana;
+	text-shadow: 2px 2px 2px black;
+}
+
+#content {
+	margin: 32px auto;
+	width: 1080px;
+}
+
+table {
+	background-color: #a673d6;
+	margin: 0px auto;
+}
+
+li {
+	margin: 4px 0px 4px 0px;
+}
+
+li.register_bits {
+	margin: 12px 0px 0px 0px;
+}
+
+li table {
+	margin: 12px 0px 0px 0px;
+}
+
+th, td {
+	background-color: #33174b;
+	padding: 10px;
+	min-width: 35px;
+	height: 20px;
+	font-family: "Lucida Console";
+	text-align: center;
+}
